@@ -8,12 +8,12 @@
 	{
 		// Is the field required
 		$isrequired = ($field_property['field_required'])
-			? "<span class='required'> *</span>"
+			? "<font color=red> *</font>"
 			: "";
 
 		// Private field
 		$isprivate = ($field_property['field_ispublic_visible'])
-			? '<span class="private">(' . Kohana::lang('ui_main.private') . ')</span>'
+			? '<font style="color:gray;font-size:70%">(' . Kohana::lang('ui_main.private') . ')</font>'
 			: '';
 
 		// Workaround for situations where admin can view, but doesn't have sufficient perms to edit.
@@ -166,7 +166,7 @@
 						$option = trim($option);
 						$set_default = ($option == trim($default));
 
-						$html .= "<span class=\"custom-field-option\">";
+						$html .= "<span style=\"margin-right: 15px\">";
 						$html .= form::label('custom_field['.$field_id.']'," ".$option." ");
 						$html .= form::radio('custom_field['.$field_id.']',$option, $set_default, $id_name);
 						$html .= "</span>";
@@ -197,7 +197,7 @@
 							}
 						}
 						$option = trim($option);
-						$html .= "<span class=\"custom-field-option\">";
+						$html .= "<span style=\"margin-right: 15px\">";
 						$html .= form::checkbox("custom_field[".$field_id.'-'.$cnt.']', $option, $set_default, $id_name);
 						$html .= form::label("custom_field[".$field_id.']'," ".$option);
 						$html .= "</span>";
@@ -290,11 +290,12 @@
 				echo "<h2>" . $field_property['field_name'] . "</h2>";
 				echo "<div id=\"custom_field_" . $field_id . "_inner\">";
 			}
+			echo '</div></div>';
 		}
 		elseif ($field_property['field_type'] == 9)
 		{
 			// End of custom div
-			echo "</div></div>";
+			echo "<div></div>";
 			if (isset($editor))
 			{
 				echo "<h4 style=\"padding-top:0px;\">-------" . Kohana::lang('ui_admin.divider_end_field') . "--------</h4>";
@@ -321,7 +322,10 @@
 			<a href=\"javascript:fieldAction('e','EDIT',".$field_id.",".$form['id'].",".$field_property['field_type'].");\">EDIT</a>&nbsp;|&nbsp;
 			<a href=\"javascript:fieldAction('d','DELETE',".$field_id.",".$form['id'].",".$field_property['field_type'].");\">DELETE</a>&nbsp;|&nbsp;
 			<a href=\"javascript:fieldAction('mu','MOVE',".$field_id.",".$form['id'].",".$field_property['field_type'].");\">MOVE UP</a>&nbsp;|&nbsp;
-			<a href=\"javascript:fieldAction('md','MOVE',".$field_id.",".$form['id'].",".$field_property['field_type'].");\">MOVE DOWN</a>
+			<a href=\"javascript:fieldAction('md','MOVE',".$field_id.",".$form['id'].",".$field_property['field_type'].");\">MOVE DOWN</a>&nbsp;|&nbsp;
+			". Kohana::lang('ui_admin.required').": ".$isrequired."&nbsp;|&nbsp;
+			". Kohana::lang('ui_main.reports_btn_submit').": ".$visibility_selection[$field_property['field_ispublic_submit']]."&nbsp;|&nbsp;
+			". Kohana::lang('ui_main.view').": ".$visibility_selection[$field_property['field_ispublic_visible']]."
 			</div>";
 			echo $form_fields;
 		}
